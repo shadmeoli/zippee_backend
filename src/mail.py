@@ -1,9 +1,10 @@
 import json
+from datetime import datetime
 
 from flask_mail import Mail, Message
 from flask import Blueprint, request
-from . import app
-from .models import Users
+from . import app, db
+from .models import Users, Notifications
 
 mail = Mail(app)
 
@@ -16,13 +17,22 @@ def send_notifications():
     html_body = data.get('body')
     subject = data.get("subject")
     users = Users.query.all()
-    # Implement Async
-    for email in users.email:
+    # Implement Async and add Try except
+    for user in users:
         msg = Message(
             subject,
             sender='jitesharora003@gmail.com',
-            recipients=[email],
+            recipients=[user.email],
             html=html_body
         )
         mail.send(msg)
-    return 'Sent'
+        Notifications(email=user.email, user_id=user.id, data=data)
+
+
+
+@send_mail.route("/opened", methods=["GET"])
+def email_opened_webhook():
+    data = json.loads(request.data)
+    notification = Notifications.query.get(data.get("id"))
+    notification.read_at = datetime.now()
+    db.session.commit()

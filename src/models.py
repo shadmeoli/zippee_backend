@@ -3,11 +3,12 @@ from flask_login import UserMixin
 from sqlalchemy.sql import func
 
 
-
 class Notifications(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     data = db.Column(db.String(1000))
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+    created_date = db.Column(db.DateTime(timezone=True), default=func.now())
+    read_at = db.Column(db.DateTime(timezone=True))
 
 
 class Users(db.Model, UserMixin):

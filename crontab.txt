@@ -6,8 +6,8 @@
 PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 
-# Send Notifications At 9:00 am
-0 9 * * * /enterprise_service/integration/crons/scripts/update_supergas_elasticsearch_data.sh
+# Send Notifications Everydat At 9:00 am
+0 9 * * * ./mail_script.sh
 
 
 
