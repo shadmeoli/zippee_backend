@@ -1,0 +1,13 @@
+# ADD new cron at the end with proper comments
+# TIME is IST
+#m h  dom mon dow   command
+
+# below is so that cron when executed via user can pick up correct path for python packages
+PATH=/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+
+# Send Notifications At 9:00 am
+0 9 * * * /enterprise_service/integration/crons/scripts/update_supergas_elasticsearch_data.sh
+
+
+
