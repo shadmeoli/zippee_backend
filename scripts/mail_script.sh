@@ -4,4 +4,4 @@ echo "Starting $NAME as `whoami`"
 
 source ~/.bashrc
 
-exec python email_script.py >> logs.log
+exec python3 email_script.py >> logs.log

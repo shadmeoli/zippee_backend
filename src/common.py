@@ -5,7 +5,7 @@ email_tracker_body =  """<!DOCTYPEHTML>
     </head>
     <bodybgcolor="#ffffff"text="#000000">
     Thisisthebodytext<br>
-    <img src="http://35.240.237.249:5000/mail/tracker?id=456"
+    <img src="http://35.240.237.249:5000/mail/tracker?id={id}"
     <divclass="moz-signature"><i><br>
     <br>
     Regards<br>

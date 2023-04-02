@@ -11,17 +11,15 @@ mail = Mail(app)
 send_mail = Blueprint('mail', __name__)
 
 
-
 @send_mail.route("/mail/send", methods=["POST"])
 def send_notifications():
     data = json.loads(request.data)
     html_body = data.get('body')
     subject = data.get("subject")
-    html_body = common.email_tracker_body
     users = Users.query.all()
     # Implement Async and add Try except
     for user in users:
-        print(user.email)
+        html_body = common.email_tracker_body.format(id=user.id)
         msg = Message(
             subject,
             sender='jitesharora003@gmail.com',
