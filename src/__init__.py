@@ -37,7 +37,7 @@ def create_app():
 
     @login_manager.unauthorized_handler
     def unauthorized():
-        return {"data": "login first"}
+        return {"status": False, "message": "Please login to view this resource"}, 401
 
     return app
 

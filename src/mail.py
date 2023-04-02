@@ -2,7 +2,7 @@ import json
 from datetime import datetime
 
 from flask_mail import Mail, Message
-from flask import Blueprint, request
+from flask import Blueprint, request, send_file
 from . import app, db, common
 from .models import Users, Notifications
 
@@ -33,7 +33,7 @@ def send_notifications():
         print(notification)
         db.session.add(notification)
     db.session.commit()
-    return {"message": "Success"}, 200
+    return {"status": True, "message": "Success"}, 200
 
 @send_mail.route("/mail/tracker", methods=["GET"])
 def email_opened_webhook():
@@ -41,4 +41,4 @@ def email_opened_webhook():
     notification = Notifications.query.get(data.get('id'))
     notification.read_at = datetime.now()
     db.session.commit()
-    return ""
+    return send_file('static/zippee.png', 'image/gif')
