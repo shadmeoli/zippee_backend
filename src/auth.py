@@ -10,6 +10,7 @@ from flask_login import login_user, login_required, logout_user
 auth = Blueprint('auth', __name__)
 
 
+
 @auth.route("/login", methods=["POST"])
 @cross_origin()
 def login():
@@ -54,12 +55,13 @@ def signup():
 @cross_origin()
 def logout():
     logout_user()
-    return {"data": "logout"}
+    return {"status": True, "message": "User is logged out"}
 
 
 
 @auth.route("/notification")
 def notification_opend():
-    return {"data": "notification_opend"}
+    return {"status": True, "data": "notification_opend"}
+
 
 

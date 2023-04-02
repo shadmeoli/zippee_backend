@@ -1,25 +1,26 @@
+import os
 from flask import Flask
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
-from os import path
 
 app = Flask(__name__)
 db = SQLAlchemy()
 
 
 def create_app():
-    app.config['SECRET_KEY'] = "abcd"
-    app.config['SQLALCHEMY_DATABASE_URI'] = f'postgresql://postgres:password@localhost/zippee'
+    app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
     app.config['MAIL_SERVER'] = 'smtp.gmail.com'
     app.config['MAIL_PORT'] = 465
-    app.config['MAIL_USERNAME'] = 'jitesharora003@gmail.com'
-    app.config['MAIL_PASSWORD'] = 'Iwillbeback002'
+    app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+    app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
     app.config['MAIL_USE_TLS'] = False
     app.config['MAIL_USE_SSL'] = True
     db.init_app(app)
     from .views import views
     from .auth import auth
     from .mail import send_mail
+
     with app.app_context():
         db.create_all()
     app.register_blueprint(send_mail, url_prefix="/api")
@@ -40,8 +41,3 @@ def create_app():
 
     return app
 
-
-def create_database(app):
-    if not path.exists('src/zippee.db'):
-        db.create_all()
-        print("Database Create")
